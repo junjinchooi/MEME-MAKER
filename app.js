@@ -17,12 +17,25 @@ canvas.height = 800;
 // ctx.fill();                      // 내부 색을 채움 
                                     //cf) ctx.stroke(); 그은 선을 보여줌(색X)
 
-ctx.fillRect(200, 200, 50, 200);    //왼쪽 벽 만들기
-ctx.fillRect(400, 200, 50, 200);    //오른쪽 벽 만들기
-ctx.lineWidth = 2;                  //선 굵기 조절
-ctx.strokeRect(300, 300, 50, 100);  //문 만들기
-ctx.fillRect(200, 200, 200, 20);    //천장 만들기
-ctx.moveTo(200,200);                //지붕 만들기 위해 브러쉬 이동
-ctx.lineTo(325,100);
-ctx.lineTo(450,200);                //선만 그린것! (stroke/ fill로 색을 입혀야 됨)
-ctx.fill();                         //지붕 채우기 
+// ctx.fillRect(200, 200, 50, 200);    //왼쪽 벽 만들기
+// ctx.fillRect(400, 200, 50, 200);    //오른쪽 벽 만들기
+// ctx.lineWidth = 2;                  //선 굵기 조절
+// ctx.strokeRect(300, 300, 50, 100);  //문 만들기
+// ctx.fillRect(200, 200, 200, 20);    //천장 만들기
+// ctx.moveTo(200,200);                //지붕 만들기 위해 브러쉬 이동
+// ctx.lineTo(325,100);
+// ctx.lineTo(450,200);                //선만 그린것! (stroke/ fill로 색을 입혀야 됨)
+// ctx.fill();                         //지붕 채우기 
+
+ctx.fillRect(210-40, 200-20, 15, 100);      //왼쪽 팔 만들기 
+ctx.fillRect(350-40, 200-20, 15, 100);      //오른쪽 팔 만들기 
+ctx.fillRect(260-40, 200-20, 60, 200);      //몸통 만들기 
+
+ctx.arc(250, 100, 50, 0, 2 * Math.PI);      //원 만들기 (X시작, Y시작, 반지름, 시작 앵글, 마침 앵글)
+ctx.fill();
+
+ctx.beginPath();                            //색깔을 바꿔줘야 한다?=> 새로운 Path가 필요한가?
+ctx.fillStyle = "White";                    //색깔 지정시 대소문자or 오타 or 띄어쓰기 주의할 것!
+ctx.arc(260+10, 80, 8, Math.PI, 2 * Math.PI);
+ctx.arc(220+10, 80, 8, Math.PI, 2 * Math.PI);
+ctx.fill(); 
