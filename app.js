@@ -27,15 +27,36 @@ canvas.height = 800;
 // ctx.lineTo(450,200);                //선만 그린것! (stroke/ fill로 색을 입혀야 됨)
 // ctx.fill();                         //지붕 채우기 
 
-ctx.fillRect(210-40, 200-20, 15, 100);      //왼쪽 팔 만들기 
-ctx.fillRect(350-40, 200-20, 15, 100);      //오른쪽 팔 만들기 
-ctx.fillRect(260-40, 200-20, 60, 200);      //몸통 만들기 
+// ctx.fillRect(210-40, 200-20, 15, 100);      //왼쪽 팔 만들기 
+// ctx.fillRect(350-40, 200-20, 15, 100);      //오른쪽 팔 만들기 
+// ctx.fillRect(260-40, 200-20, 60, 200);      //몸통 만들기 
 
-ctx.arc(250, 100, 50, 0, 2 * Math.PI);      //원 만들기 (X시작, Y시작, 반지름, 시작 앵글, 마침 앵글)
-ctx.fill();
+// ctx.arc(250, 100, 50, 0, 2 * Math.PI);      //원 만들기 (X시작, Y시작, 반지름, 시작 앵글, 마침 앵글)
+// ctx.fill();
 
-ctx.beginPath();                            //색깔을 바꿔줘야 한다?=> 새로운 Path가 필요한가?
-ctx.fillStyle = "White";                    //색깔 지정시 대소문자or 오타 or 띄어쓰기 주의할 것!
-ctx.arc(260+10, 80, 8, Math.PI, 2 * Math.PI);
-ctx.arc(220+10, 80, 8, Math.PI, 2 * Math.PI);
-ctx.fill(); 
+// ctx.beginPath();                            //색깔을 바꿔줘야 한다?=> 새로운 Path가 필요한가?
+// ctx.fillStyle = "White";                    //색깔 지정시 대소문자or 오타 or 띄어쓰기 주의할 것!
+// ctx.arc(260+10, 80, 8, Math.PI, 2 * Math.PI);
+// ctx.arc(220+10, 80, 8, Math.PI, 2 * Math.PI);
+// ctx.fill(); 
+
+ctx.lineWidth = 2; 
+
+const colors = [                                //색깔 참조 사이트: https://flatuicolors.com/palette/ru
+    "#f3a683",
+    "#f7d794",
+    "#778beb",
+    "#e77f67",
+    "#cf6a87"
+];
+
+function onclick(event) {
+    ctx.beginPath();                            //색깔을 바꿔줘야 한다?=> 새로운 Path가 필요한가?
+    ctx.moveTo(0,0);                            //시작 위치: 왼쪽 끝 설정
+    const color = colors[Math.floor(Math.random()*colors.length)];//위의 5가지 색깔이 랜덤으로 출력
+    ctx.strokeStyle = color;
+    ctx.lineTo(event.offsetX, event.offsetY);
+    ctx.stroke();
+}
+
+canvas.addEventListener("mousemove", onclick);
