@@ -1,9 +1,9 @@
+const lineWidth = document.getElementById("line-width");
 const canvas = document.querySelector("canvas");
-
-const ctx = canvas.getContext("2d")
+const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
-ctx.lineWidth = 2;
+ctx.lineWidth = lineWidth.value;        //Value=5로 지정(html 파일)
 let ispainting = false; 
 
 // fillRect() -> fill() + rect()
@@ -53,7 +53,7 @@ let ispainting = false;
 // ];
 
 // function onclick(event) {
-//     ctx.beginPath();                            //경로구분) 색깔을 바꿔줘야 한다?=> 새로운 Path가 필요한가?
+//     ctx.beginPath();                            //경로구분) 색깔을 바꿔줘야 한다?=> 새로운 Path가 필요한가?(모든 line은 같은 path로 그려짐)
 //     ctx.moveTo(0,0);                            //시작 위치: 왼쪽 끝 설정
 //     const color = colors[Math.floor(Math.random()*colors.length)];//위의 5가지 색깔이 랜덤으로 출력
 //     ctx.strokeStyle = color;
@@ -76,8 +76,17 @@ function startPainting(){
 }
 function cancelPainting(){
     ispainting = false;
+    ctx.beginPath();                                //그려진 선과 새로운 선의 연결을 끊어줌-새로운 경로 시작 
+}
+function onLinewidthChange(event){
+    console.log(event.target.value);
+    ctx.lineWidth = event.target.value;
 }
 canvas.addEventListener("mousemove", onMove); 
 canvas.addEventListener("mousedown", startPainting);//mousedown: 마우스를 누른 채로 있는 것/cf)click: 마우스를 눌렀다가 뗐을 때
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
+
+
+
+lineWidth.addEventListener("change", onLinewidthChange)//이벤트 리스너(선 굵기) 만들기 
