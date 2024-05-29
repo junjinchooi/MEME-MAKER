@@ -1,3 +1,4 @@
+const color = document.getElementById("color");     
 const lineWidth = document.getElementById("line-width");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -76,11 +77,16 @@ function startPainting(){
 }
 function cancelPainting(){
     ispainting = false;
-    ctx.beginPath();                                //그려진 선과 새로운 선의 연결을 끊어줌-새로운 경로 시작 
+    ctx.beginPath();                                //그려진 선과 새로운 선의 연결을 끊어줌-새로운 경로 시작  
 }
 function onLinewidthChange(event){
     console.log(event.target.value);
     ctx.lineWidth = event.target.value;
+}
+
+function onColorChange(event){
+    ctx.strokeStyle = event.target.value;           //선
+    ctx.fillStyle = event.target.value;             //채우기
 }
 canvas.addEventListener("mousemove", onMove); 
 canvas.addEventListener("mousedown", startPainting);//mousedown: 마우스를 누른 채로 있는 것/cf)click: 마우스를 눌렀다가 뗐을 때
@@ -90,3 +96,4 @@ canvas.addEventListener("mouseleave", cancelPainting);
 
 
 lineWidth.addEventListener("change", onLinewidthChange)//이벤트 리스너(선 굵기) 만들기 
+color.addEventListener("change", onColorChange);       //이벤트리스너(색깔 바) 만들기 
