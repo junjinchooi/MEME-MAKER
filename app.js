@@ -1,3 +1,4 @@
+const colorOptions = Array.from(document.getElementsByClassName("color-option"));
 const color = document.getElementById("color");     
 const lineWidth = document.getElementById("line-width");
 const canvas = document.querySelector("canvas");
@@ -85,9 +86,17 @@ function onLinewidthChange(event){
 }
 
 function onColorChange(event){
-    ctx.strokeStyle = event.target.value;           //선
-    ctx.fillStyle = event.target.value;             //채우기
+    const colorValue = event.target.dataset.color;
+    ctx.strokeStyle = colorValue;                   //선
+    ctx.fillStyle = colorValue;                     //채우기
+    color.value = colorValue;
 }
+
+function onColorClick(event){
+    ctx.strokeStyle = event.target.dataset.color;           
+    ctx.fillStyle = event.target.dataset.color;
+}
+
 canvas.addEventListener("mousemove", onMove); 
 canvas.addEventListener("mousedown", startPainting);//mousedown: 마우스를 누른 채로 있는 것/cf)click: 마우스를 눌렀다가 뗐을 때
 canvas.addEventListener("mouseup", cancelPainting);
@@ -97,3 +106,5 @@ canvas.addEventListener("mouseleave", cancelPainting);
 
 lineWidth.addEventListener("change", onLinewidthChange)//이벤트 리스너(선 굵기) 만들기 
 color.addEventListener("change", onColorChange);       //이벤트리스너(색깔 바) 만들기 
+
+colorOptions.forEach(color => color.addEventListener("click", onColorClick));
