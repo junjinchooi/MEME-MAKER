@@ -1,3 +1,4 @@
+const saveBtn = document.getElementById("save"); 
 const textInput = document.getElementById("text"); 
 const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn"); 
@@ -159,6 +160,14 @@ function onDoubleClick(event) {
     }
 }
 
+function onSaveClick() {
+    const url = (canvas.toDataURL());               //캔버스에 그린 그림 url로 변환 
+    const a = document.createElement("a")           //a 태그 생성해 가짜 링크 생성
+    a.href = url;                                   //링크의 href는 그림 Url로 설정
+    a.download = "myDrawing.png";                   //내그림.png라는 파일명으로 저장
+    a.click();                                      //링크 클릭시 파일 다운로드 
+}
+
 canvas.addEventListener("dblclick", onDoubleClick); 
 canvas.addEventListener("mousemove", onMove); 
 canvas.addEventListener("mousedown", startPainting);//mousedown: 마우스를 누른 채로 있는 것/cf)click: 마우스를 눌렀다가 뗐을 때
@@ -176,3 +185,4 @@ modeBtn.addEventListener("click", onModeClick);
 destroyBtn.addEventListener("click", onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange); 
+saveBtn.addEventListener("click", onSaveClick); 
