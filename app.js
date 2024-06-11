@@ -138,19 +138,19 @@ function onEraserClick(){
     modeBtn.innerText = "Fill";
 }
 
-function onFileChange(event) {                      //이미지 추가 
-    const file = event.target.files[0];
-    const url = URL.createObjectURL(file);
-    const image = new Image()
+function onFileChange(event) {                      //유저가 파일을 업로드한 브라우저 안에서만 사용할 수 있는 URL 
+const file = event.target.files[0];                 //createObjectURL : 해당 파일의 브라우저 메모리 URL 알수 있음 
+    const url = URL.createObjectURL(file);          //=document.createElement("img")
+    const image = new Image()                       //img태그의 src 속성을 브라우저에서 불러온 URL로 설정 
     image.src = url;
-    image.onload = function() {
-        ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        fileInput.value = null; 
+    image.onload = function() {                     //이벤트를 추가할 수 있는 또 다른 방법(이벤트리스너)
+        ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);//이미지를 불러와 X;0 y;0 좌표에 그려줌, 이미지 크기 설정 
+        fileInput.value = null;                     //input에 있는 파일을 비워줌(다른 파일을 불러올 준비)
     };
 }
 
 function onDoubleClick(event) {
-    if (text !== "") {
+    if (text !== "") {                                  //텍스트값이 비어있지 않다면, 
         ctx.save();                                     //ctx의 현재 상태, 색상, 스타일 모든 것을 저장
         const text = textInput.value;                   //상태 수정 시작
         ctx.lineWidth = 1; 
@@ -168,7 +168,7 @@ function onSaveClick() {
     a.click();                                      //링크 클릭시 파일 다운로드 
 }
 
-canvas.addEventListener("dblclick", onDoubleClick); 
+canvas.addEventListener("dblclick", onDoubleClick); //(mousedown +mouseup)*2
 canvas.addEventListener("mousemove", onMove); 
 canvas.addEventListener("mousedown", startPainting);//mousedown: 마우스를 누른 채로 있는 것/cf)click: 마우스를 눌렀다가 뗐을 때
 canvas.addEventListener("mouseup", cancelPainting);
