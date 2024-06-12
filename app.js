@@ -112,6 +112,7 @@ function onColorClick(event){
 }
 
 function onModeClick(){
+    // alert("--onModeClick-");
     if(isFilling){
         isFilling= false; 
         modeBtn.innerText = "Fill";
@@ -128,6 +129,7 @@ function onCanvasClick() {
 }
 
 function onDestroyClick(){
+    alert("정말로 그림판 전체를 삭제하시겠습니까?")
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT); 
 }
@@ -138,8 +140,10 @@ function onEraserClick(){
     modeBtn.innerText = "Fill";
 }
 
-function onFileChange(event) {                      //유저가 파일을 업로드한 브라우저 안에서만 사용할 수 있는 URL 
-const file = event.target.files[0];                 //createObjectURL : 해당 파일의 브라우저 메모리 URL 알수 있음 
+function onFileChange(event) {  
+                        //유저가 파일을 업로드한 브라우저 안에서만 사용할 수 있는 URL 
+    // alert("1111");
+    const file = event.target.files[0];                 //createObjectURL : 해당 파일의 브라우저 메모리 URL 알수 있음 
     const url = URL.createObjectURL(file);          //=document.createElement("img")
     const image = new Image()                       //img태그의 src 속성을 브라우저에서 불러온 URL로 설정 
     image.src = url;
@@ -161,6 +165,7 @@ function onDoubleClick(event) {
 }
 
 function onSaveClick() {
+    // alert("onSaveClick");
     const url = (canvas.toDataURL());               //캔버스에 그린 그림 url로 변환 
     const a = document.createElement("a")           //a 태그 생성해 가짜 링크 생성
     a.href = url;                                   //링크의 href는 그림 Url로 설정
