@@ -12,6 +12,29 @@ const ctx = canvas.getContext("2d");
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800; 
+const id = document.getElementById('id')
+const password = document.getElementById('password')
+const login = document.getElementById('login')
+let errStack = 0;
+
+login.addEventListener('click', () => {
+    if (id.value == 'JJ') {
+        if (password.value == '0000') {
+            alert('로그인 되었습니다!')
+        }
+        else {
+            alert('아이디와 비밀번호를 다시 한 번 확인해주세요!')
+            errStack ++;
+        }
+    }
+    else {
+        alert('존재하지 않는 계정입니다.')
+    }
+
+    if (errStack >= 5) {
+        alert('비밀번호를 5회 이상 틀리셨습니다.')
+    }
+})
 
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
@@ -19,6 +42,23 @@ ctx.lineCap = "round";
 ctx.lineWidth = lineWidth.value;        //Value=5로 지정(html 파일)
 let ispainting = false; 
 let isFilling = false; 
+// let userID = "JJ";
+// let PassWord = "1234";
+
+//     let userID = prompt("아이디가 무엇인가요?");
+//     let PassWord = prompt("비밀번호가 무엇인가요?");
+
+//         if( userID == userID ){
+//         //아이디가 같을 경우 
+//             if( PassWord == PassWord ){
+//                 console.log(id + "님 반갑습니다.");
+//             } else if {
+//                 console.log("비밀번호가 틀렸습니다.");
+//             }
+//                 } else if {
+//                     //아이디가 다른 경우 
+//                     console.log("아이디가 일치하지 않습니다.");
+//                 }
 
 // fillRect() -> fill() + rect()
 // rect() -> moveTo() + lineTo()
@@ -78,6 +118,7 @@ let isFilling = false;
 // canvas.addEventListener("mousemove", onclick);
 
 function onMove(event) {                            //20240527_2.1                    
+    // alert("--onMove--")
     if (ispainting){                                //true: stroke로 선을 그리고 함수 끝내줌
         ctx.lineTo(event.offsetX, event.offsetY);    
         ctx.stroke();                               //그은 선을 보여줌(색X)
@@ -86,18 +127,23 @@ function onMove(event) {                            //20240527_2.1
     ctx.moveTo(event.offsetX, event.offsetY);       //flase: 브러쉬만 움직여줌
 }
 function startPainting(){
+    // alert("--startPainting--")
     ispainting = true;
 }
 function cancelPainting(){
+    // alert("--cancelPainting--")
     ispainting = false;
+    // ctx.fill();
     ctx.beginPath();                                //그려진 선과 새로운 선의 연결을 끊어줌-새로운 경로 시작  
 }
 function onLinewidthChange(event){
+    // alert("--onLinewidthChange--");
     console.log(event.target.value);
     ctx.lineWidth = event.target.value;
 }
 
 function onColorChange(event){
+    alert("--onColorChange--"); 
     const colorValue = event.target.dataset.color;
     ctx.strokeStyle = colorValue;                   //선
     ctx.fillStyle = colorValue;                     //채우기
@@ -105,6 +151,7 @@ function onColorChange(event){
 }
 
 function onColorClick(event){
+    // alert("--onColorClick--");
     const colorValue = event.target.dataset.color;
     ctx.strokeStyle = colorValue;       
     ctx.fillStyle = colorValue; 
@@ -112,7 +159,7 @@ function onColorClick(event){
 }
 
 function onModeClick(){
-    // alert("--onModeClick-");
+    alert("--onModeClick-");
     if(isFilling){
         isFilling= false; 
         modeBtn.innerText = "Fill";
@@ -123,28 +170,32 @@ function onModeClick(){
 }
 
 function onCanvasClick() {
+    // alert("--onCanvasClick--")
     if(isFilling) {
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);               //캔버스 채우기 
     }
 }
 
 function onDestroyClick(){
-    alert("정말로 그림판 전체를 삭제하시겠습니까?")
+    // alert("정말로 그림판 전체를 삭제하시겠습니까?")
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT); 
 }
 
 function onEraserClick(){
+    // alert("--onEraserClick--"); 
     ctx.strokeStyle = "white"; 
     isFilling = false; 
-    modeBtn.innerText = "Fill";
+    // modeBtn.innerText = "Fill";
 }
 
 function onFileChange(event) {  
                         //유저가 파일을 업로드한 브라우저 안에서만 사용할 수 있는 URL 
-    // alert("1111");
+    alert("onFileChange");
     const file = event.target.files[0];                 //createObjectURL : 해당 파일의 브라우저 메모리 URL 알수 있음 
+    //console.log(event.target.files[0]);
     const url = URL.createObjectURL(file);          //=document.createElement("img")
+    //console.log(URL.createObjectURL(file));
     const image = new Image()                       //img태그의 src 속성을 브라우저에서 불러온 URL로 설정 
     image.src = url;
     image.onload = function() {                     //이벤트를 추가할 수 있는 또 다른 방법(이벤트리스너)
@@ -154,18 +205,19 @@ function onFileChange(event) {
 }
 
 function onDoubleClick(event) {
-    if (text !== "") {                                  //텍스트값이 비어있지 않다면, 
+    if (text !== "") {      
+        // alert("onDoubleClick");                         //텍스트값이 비어있지 않다면, 
         ctx.save();                                     //ctx의 현재 상태, 색상, 스타일 모든 것을 저장
         const text = textInput.value;                   //상태 수정 시작
         ctx.lineWidth = 1; 
         ctx.font = "68px serif"; 
-        ctx.fillText(text, event.offsetX, event.offsetY); 
-        ctx.restore();                                  //이전에 저장된 상태로 돌아감
+        ctx.strokeText(text, event.offsetX, event.offsetY); 
+        ctx.restore();                                  //이전에 저장된 상태로 돌아감(텍스트 두께 등을 바꿔놓앗으니까)
     }
 }
 
 function onSaveClick() {
-    // alert("onSaveClick");
+    alert("onSaveClick");
     const url = (canvas.toDataURL());               //캔버스에 그린 그림 url로 변환 
     const a = document.createElement("a")           //a 태그 생성해 가짜 링크 생성
     a.href = url;                                   //링크의 href는 그림 Url로 설정
